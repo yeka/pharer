@@ -2,7 +2,7 @@
 if (count($argv) < 2) {
 
 } else {
-	$phar_file = $argv[1];
+	$phar_file = getcwd().'/'.$argv[1];
 	$src = getcwd().'/'.$argv[2];
 	createPhar($phar_file, $src); die;
 }
@@ -14,7 +14,7 @@ function createPhar($phar_file, $src)
 		echo "Directory empty";
 		exit;
 	}
-	$phar = new Phar(__DIR__."/$phar_file", FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, basename($phar_file));
+	$phar = new Phar($phar_file, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, basename($phar_file));
 	
 	foreach ($dir as $v) {
 		$phar[$v] = file_get_contents($src."/$v");
